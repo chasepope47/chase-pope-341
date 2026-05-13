@@ -1,0 +1,24 @@
+### Create a contact
+POST http://localhost:8080/contacts
+Content-Type: application/json
+
+{
+  "firstName": "Chase",
+  "lastName": "Pope",
+  "email": "chase@example.com",
+  "phone": "208-555-1234"
+}
+
+### Update a contact (paste a real id from MongoDB after creating one)
+PUT http://localhost:8080/contacts/6a03cf7de062f88849a1d722
+Content-Type: application/json
+
+{
+  "firstName": "Chase",
+  "lastName": "Pope",
+  "email": "updated@example.com",
+  "phone": "208-555-9999"
+}
+
+### Delete a contact
+DELETE http://localhost:8080/contacts/6a03cf7de062f88849a1d722
