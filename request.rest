@@ -1,3 +1,13 @@
+### Get all contacts
+GET http://localhost:8080/contacts
+
+###
+
+### Get one contact
+GET http://localhost:8080/contacts/PASTE_ID_HERE
+
+###
+
 ### Create a contact
 POST http://localhost:8080/contacts
 Content-Type: application/json
@@ -9,8 +19,10 @@ Content-Type: application/json
   "phone": "208-555-1234"
 }
 
-### Update a contact (paste a real id from MongoDB after creating one)
-PUT http://localhost:8080/contacts/6a03cf7de062f88849a1d722
+###
+
+### Update a contact
+PUT http://localhost:8080/contacts/PASTE_ID_HERE
 Content-Type: application/json
 
 {
@@ -20,5 +32,7 @@ Content-Type: application/json
   "phone": "208-555-9999"
 }
 
+###
+
 ### Delete a contact
-DELETE http://localhost:8080/contacts/6a03cf7de062f88849a1d722
+DELETE http://localhost:8080/contacts/PASTE_ID_HERE

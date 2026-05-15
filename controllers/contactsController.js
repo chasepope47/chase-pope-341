@@ -1,5 +1,16 @@
 const { ObjectId } = require('mongodb');
-const { getDb } = require('../db/connect'); // adjust path to however you connected MongoDB
+const { getDb } = require('../db/connect');
+
+const getContacts = async (req, res) => {
+  const result = await getDb().collection('contacts').find().toArray();
+  res.status(200).json(result);
+};
+
+const getContactById = async (req, res) => {
+  const id = new ObjectId(req.params.id);
+  const result = await getDb().collection('contacts').findOne({ _id: id });
+  res.status(200).json(result);
+};
 
 const createContact = async (req, res) => {
   const contact = req.body;
@@ -20,4 +31,4 @@ const deleteContact = async (req, res) => {
   res.status(200).send();
 };
 
-module.exports = { createContact, updateContact, deleteContact };
+module.exports = { getContacts, getContactById, createContact, updateContact, deleteContact };
