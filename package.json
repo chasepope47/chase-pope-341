@@ -10,7 +10,9 @@
     "cors": "^2.8.6",
     "dotenv": "^17.4.2",
     "express": "^4.22.1",
-    "mongodb": "^7.2.0"
+    "mongodb": "^7.2.0",
+    "swagger-autogen": "^2.23.7",
+    "swagger-ui-express": "^5.0.1"
   },
   "repository": {
     "type": "git",

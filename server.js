@@ -4,9 +4,12 @@ const app = express();
 const homeRoutes = require('./routes/index');
 require('dotenv').config();
 const { connectToDb } = require('./db/connect');
+const swaggerUi = require('swagger-ui-express');
+const swaggerDocument = require('./swagger.json');
 
 app.use(cors());
 app.use(express.json());
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.use('/', homeRoutes);
 
 const PORT = process.env.PORT || 8080;

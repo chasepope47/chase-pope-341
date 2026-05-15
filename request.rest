@@ -1,15 +1,15 @@
 ### Get all contacts
-GET http://localhost:8080/contacts
+GET https://chase-pope-341.onrender.com/contacts
 
 ###
 
 ### Get one contact
-GET http://localhost:8080/contacts/PASTE_ID_HERE
+GET https://chase-pope-341.onrender.com/contacts/PASTE_ID_HERE
 
 ###
 
 ### Create a contact
-POST http://localhost:8080/contacts
+POST https://chase-pope-341.onrender.com/contacts
 Content-Type: application/json
 
 {
@@ -22,7 +22,7 @@ Content-Type: application/json
 ###
 
 ### Update a contact
-PUT http://localhost:8080/contacts/PASTE_ID_HERE
+PUT https://chase-pope-341.onrender.com/contacts/PASTE_ID_HERE
 Content-Type: application/json
 
 {
@@ -35,4 +35,4 @@ Content-Type: application/json
 ###
 
 ### Delete a contact
-DELETE http://localhost:8080/contacts/PASTE_ID_HERE
+DELETE https://chase-pope-341.onrender.com/contacts/PASTE_ID_HERE
