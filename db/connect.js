@@ -5,7 +5,7 @@ let db;
 const connectToDb = (callback) => {
   MongoClient.connect(process.env.MONGODB_URI)
     .then((client) => {
-      db = client.db('Cluster0'); // your database name
+      db = client.db('contacts'); // your database name
       callback();
     })
     .catch((err) => {
