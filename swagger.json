@@ -1,29 +1,19 @@
 {
   "swagger": "2.0",
   "info": {
-    "title": "Contacts API",
-    "description": "API for managing contacts",
+    "title": "Pantry Tracker API",
+    "description": "Track pantry items, costs, and expiration dates",
     "version": "1.0.0"
   },
-  "host": "chase-pope-341.onrender.com",
+  "host": "super-train-7vvj66q6rqwqhx5qr-8080.app.github.dev",
   "basePath": "/",
   "schemes": [
     "https"
   ],
   "paths": {
-    "/": {
+    "/items/": {
       "get": {
-        "description": "",
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
-    "/contacts": {
-      "get": {
-        "description": "",
+        "description": "Retrieve all pantry items from the database.",
         "responses": {
           "200": {
             "description": "OK"
@@ -32,6 +22,38 @@
       },
       "post": {
         "description": "",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "New pantry item details",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "example": "Chicken Broth"
+                },
+                "category": {
+                  "type": "string",
+                  "example": "Canned Goods"
+                },
+                "quantity": {
+                  "type": "number",
+                  "example": 2
+                },
+                "cost": {
+                  "type": "number",
+                  "example": 1.99
+                },
+                "expirationDate": {
+                  "type": "string",
+                  "example": "2027-03-15"
+                }
+              }
+            }
+          }
+        ],
         "responses": {
           "201": {
             "description": "Created"
@@ -39,31 +61,66 @@
         }
       }
     },
-    "/contacts/{id}": {
+    "/items/{id}": {
       "get": {
-        "description": "",
+        "description": "Retrieve a single pantry item by its unique database ID.",
         "parameters": [
           {
             "name": "id",
             "in": "path",
             "required": true,
-            "type": "string"
+            "type": "string",
+            "description": "The MongoDB ObjectId of the pantry item"
           }
         ],
         "responses": {
           "200": {
             "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
           }
         }
       },
       "put": {
-        "description": "",
+        "description": "Update an existing pantry item by its ID.",
         "parameters": [
           {
             "name": "id",
             "in": "path",
             "required": true,
-            "type": "string"
+            "type": "string",
+            "description": "The MongoDB ObjectId of the item to update"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Updated pantry item properties",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "example": "Chicken Broth"
+                },
+                "category": {
+                  "type": "string",
+                  "example": "Canned Goods"
+                },
+                "quantity": {
+                  "type": "number",
+                  "example": 5
+                },
+                "cost": {
+                  "type": "number",
+                  "example": 1.99
+                },
+                "expirationDate": {
+                  "type": "string",
+                  "example": "2027-03-15"
+                }
+              }
+            }
           }
         ],
         "responses": {
@@ -73,18 +130,19 @@
         }
       },
       "delete": {
-        "description": "",
+        "description": "Delete a pantry item from the database.",
         "parameters": [
           {
             "name": "id",
             "in": "path",
             "required": true,
-            "type": "string"
+            "type": "string",
+            "description": "The MongoDB ObjectId of the item to delete"
           }
         ],
         "responses": {
-          "200": {
-            "description": "OK"
+          "204": {
+            "description": "No Content"
           }
         }
       }

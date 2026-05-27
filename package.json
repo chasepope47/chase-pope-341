@@ -4,16 +4,9 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js"    
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js",
     "swagger": "node swagger.js"
-  },
-  "dependencies": {
-    "cors": "^2.8.6",
-    "dotenv": "^17.4.2",
-    "express": "^4.22.1",
-    "mongodb": "^7.2.0",
-    "swagger-autogen": "^2.23.7",
-    "swagger-ui-express": "^5.0.1"
   },
   "repository": {
     "type": "git",
@@ -22,9 +15,16 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "type": "commonjs",
   "bugs": {
     "url": "https://github.com/chasepope47/chase-pope-341/issues"
   },
-  "homepage": "https://github.com/chasepope47/chase-pope-341#readme"
+  "homepage": "https://github.com/chasepope47/chase-pope-341#readme",
+  "dependencies": {
+    "cors": "^2.8.6",
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
+    "mongodb": "^7.2.0",
+    "swagger-autogen": "^2.23.7",
+    "swagger-ui-express": "^5.0.1"
+  }
 }

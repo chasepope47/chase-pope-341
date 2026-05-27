@@ -1,9 +1,10 @@
 const express = require('express');
 const router = express.Router();
-const itemsController = require('../controllers/items');
+const itemsController = require('../controllers/items.js');
 
-router.get('/', itemsController.getAll);
-router.get('/:id', itemsController.getById);
+// Map the endpoints to the controller functions
+router.get('/', itemsController.getAllItems);
+router.get('/:id', itemsController.getSingleItem);
 router.post('/', itemsController.createItem);
 router.put('/:id', itemsController.updateItem);
 router.delete('/:id', itemsController.deleteItem);
