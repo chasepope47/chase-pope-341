@@ -5,7 +5,7 @@ const doc = {
     title: 'Pantry Tracker API',
     description: 'Track pantry items, costs, and expiration dates'
   },
-  host: 'localhost:8080',
+  host: 'chase-pope-341.onrender.com',
   schemes: ['https']
 };
 
