@@ -5,7 +5,7 @@ const doc = {
     title: 'Pantry Tracker API',
     description: 'Track pantry items, costs, and expiration dates'
   },
-  host: 'super-train-7vvj66q6rqwqhx5qr-8080.app.github.dev',
+  host: 'localhost:8080',
   schemes: ['https']
 };
 
