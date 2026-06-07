@@ -2,18 +2,29 @@
   "swagger": "2.0",
   "info": {
     "title": "Pantry Tracker API",
-    "description": "Track pantry items, costs, and expiration dates",
+    "description": "Track pantry items and notes with GitHub OAuth authentication",
     "version": "1.0.0"
   },
   "host": "chase-pope-341.onrender.com",
   "basePath": "/",
   "schemes": [
-    "https"
+    "https",
+    "http"
   ],
+  "securityDefinitions": {
+    "githubOAuth": {
+      "type": "oauth2",
+      "authorizationUrl": "https://github.com/login/oauth/authorize",
+      "flow": "implicit",
+      "scopes": {
+        "user:email": "Read user email"
+      }
+    }
+  },
   "paths": {
-    "/items/": {
+    "/": {
       "get": {
-        "description": "Retrieve all pantry items from the database.",
+        "description": "",
         "responses": {
           "200": {
             "description": "OK"
@@ -29,29 +40,29 @@
           {
             "name": "body",
             "in": "body",
-            "description": "New pantry item details",
             "schema": {
               "type": "object",
               "properties": {
-                "name": {
-                  "type": "string",
-                  "example": "Chicken Broth"
+                "title": {
+                  "example": "any"
+                },
+                "body": {
+                  "example": "any"
                 },
                 "category": {
-                  "type": "string",
-                  "example": "Canned Goods"
+                  "example": "any"
                 },
-                "quantity": {
-                  "type": "number",
-                  "example": 2
+                "priority": {
+                  "example": "any"
                 },
-                "cost": {
-                  "type": "number",
-                  "example": 1.99
+                "contactId": {
+                  "example": "any"
                 },
-                "expirationDate": {
-                  "type": "string",
-                  "example": "2027-03-15"
+                "dueDate": {
+                  "example": "any"
+                },
+                "completed": {
+                  "example": "any"
                 }
               }
             }
@@ -64,22 +75,24 @@
           "400": {
             "description": "Bad Request"
           },
+          "401": {
+            "description": "Unauthorized"
+          },
           "500": {
             "description": "Internal Server Error"
           }
         }
       }
     },
-    "/items/{id}": {
+    "/{id}": {
       "get": {
-        "description": "Retrieve a single pantry item by its unique database ID.",
+        "description": "",
         "parameters": [
           {
             "name": "id",
             "in": "path",
             "required": true,
-            "type": "string",
-            "description": "The MongoDB ObjectId of the pantry item"
+            "type": "string"
           }
         ],
         "responses": {
@@ -98,41 +111,43 @@
         }
       },
       "put": {
-        "description": "Update an existing pantry item by its ID.",
+        "description": "",
         "parameters": [
           {
             "name": "id",
             "in": "path",
             "required": true,
-            "type": "string",
-            "description": "The MongoDB ObjectId of the item to update"
+            "type": "string"
           },
           {
             "name": "body",
             "in": "body",
-            "description": "Updated pantry item properties",
             "schema": {
               "type": "object",
               "properties": {
-                "name": {
-                  "type": "string",
-                  "example": "Chicken Broth"
+                "title": {
+                  "example": "any"
+                },
+                "body": {
+                  "example": "any"
                 },
                 "category": {
-                  "type": "string",
-                  "example": "Canned Goods"
+                  "example": "any"
                 },
-                "quantity": {
-                  "type": "number",
-                  "example": 5
+                "priority": {
+                  "example": "any"
                 },
-                "cost": {
-                  "type": "number",
-                  "example": 1.99
+                "contactId": {
+                  "example": "any"
                 },
-                "expirationDate": {
-                  "type": "string",
-                  "example": "2027-03-15"
+                "dueDate": {
+                  "example": "any"
+                },
+                "completed": {
+                  "example": "any"
+                },
+                "createdAt": {
+                  "example": "any"
                 }
               }
             }
@@ -145,6 +160,9 @@
           "400": {
             "description": "Bad Request"
           },
+          "401": {
+            "description": "Unauthorized"
+          },
           "404": {
             "description": "Not Found"
           },
@@ -154,22 +172,24 @@
         }
       },
       "delete": {
-        "description": "Delete a pantry item from the database.",
+        "description": "",
         "parameters": [
           {
             "name": "id",
             "in": "path",
             "required": true,
-            "type": "string",
-            "description": "The MongoDB ObjectId of the item to delete"
+            "type": "string"
           }
         ],
         "responses": {
-          "204": {
-            "description": "No Content"
+          "200": {
+            "description": "OK"
           },
           "400": {
             "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
           },
           "404": {
             "description": "Not Found"
@@ -177,6 +197,119 @@
           "500": {
             "description": "Internal Server Error"
           }
+        }
+      }
+    },
+    "/github": {
+      "get": {
+        "description": "",
+        "responses": {
+          "503": {
+            "description": "Service Unavailable"
+          }
+        }
+      }
+    },
+    "/github/callback": {
+      "get": {
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/failure": {
+      "get": {
+        "description": "",
+        "responses": {
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    },
+    "/profile": {
+      "get": {
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    },
+    "/logout": {
+      "get": {
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "Item": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "example": "Chicken Broth"
+        },
+        "category": {
+          "type": "string",
+          "example": "Canned Goods"
+        },
+        "quantity": {
+          "type": "number",
+          "example": 2
+        },
+        "cost": {
+          "type": "number",
+          "example": 1.99
+        },
+        "expirationDate": {
+          "type": "string",
+          "example": "2027-03-15"
+        }
+      }
+    },
+    "Note": {
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string",
+          "example": "Restock reminder"
+        },
+        "body": {
+          "type": "string",
+          "example": "Need to buy more chicken broth before the holidays"
+        },
+        "category": {
+          "type": "string",
+          "example": "shopping"
+        },
+        "priority": {
+          "type": "string",
+          "example": "high"
+        },
+        "itemId": {
+          "type": "string",
+          "example": "665f1a2b3c4d5e6f7a8b9c0d"
+        },
+        "dueDate": {
+          "type": "string",
+          "example": "2025-12-31"
+        },
+        "completed": {
+          "type": "boolean",
+          "example": false
         }
       }
     }

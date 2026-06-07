@@ -1,3 +1,18 @@
+### Login with GitHub OAuth (opens browser)
+GET https://chase-pope-341.onrender.com/auth/github
+
+###
+
+### Get current user profile
+GET https://chase-pope-341.onrender.com/auth/profile
+
+###
+
+### Logout
+GET https://chase-pope-341.onrender.com/auth/logout
+
+###
+
 ### Get all contacts
 GET https://chase-pope-341.onrender.com/contacts
 
@@ -8,31 +23,84 @@ GET https://chase-pope-341.onrender.com/contacts/PASTE_ID_HERE
 
 ###
 
-### Create a contact
+### Create a contact (requires login)
 POST https://chase-pope-341.onrender.com/contacts
 Content-Type: application/json
 
 {
-  "firstName": "Chase",
-  "lastName": "Pope",
-  "email": "chase@example.com",
-  "phone": "208-555-1234"
+  "firstName": "Carlos",
+  "lastName": "Martinez",
+  "email": "carlos@example.com",
+  "phone": "555-555-1234",
+  "address": "456 Oak Ave, Provo, UT 84601",
+  "company": "Tech Corp",
+  "notes": "Met at BYU-Idaho event"
 }
 
 ###
 
-### Update a contact
+### Update a contact (requires login)
 PUT https://chase-pope-341.onrender.com/contacts/PASTE_ID_HERE
 Content-Type: application/json
 
 {
   "firstName": "Chase",
   "lastName": "Pope",
-  "email": "updated@example.com",
-  "phone": "208-555-9999"
+  "email": "chase@example.com",
+  "phone": "208-555-9999",
+  "address": "789 Pine St, Rexburg, ID 83440",
+  "company": "Acme",
+  "notes": "Updated contact"
 }
 
 ###
 
-### Delete a contact
+### Delete a contact (requires login)
 DELETE https://chase-pope-341.onrender.com/contacts/PASTE_ID_HERE
+
+###
+
+### Get all notes
+GET https://chase-pope-341.onrender.com/notes
+
+###
+
+### Get one note
+GET https://chase-pope-341.onrender.com/notes/PASTE_ID_HERE
+
+###
+
+### Create a note (requires login)
+POST https://chase-pope-341.onrender.com/notes
+Content-Type: application/json
+
+{
+  "title": "Follow-up call",
+  "body": "Need to call Carlos about the project proposal next week",
+  "category": "work",
+  "priority": "high",
+  "contactId": "PASTE_CONTACT_ID_HERE",
+  "dueDate": "2025-12-31",
+  "completed": false
+}
+
+###
+
+### Update a note (requires login)
+PUT https://chase-pope-341.onrender.com/notes/PASTE_ID_HERE
+Content-Type: application/json
+
+{
+  "title": "Follow-up call - DONE",
+  "body": "Called Carlos, he will review the proposal by Friday",
+  "category": "work",
+  "priority": "low",
+  "contactId": "PASTE_CONTACT_ID_HERE",
+  "dueDate": "2025-12-31",
+  "completed": true
+}
+
+###
+
+### Delete a note (requires login)
+DELETE https://chase-pope-341.onrender.com/notes/PASTE_ID_HERE
