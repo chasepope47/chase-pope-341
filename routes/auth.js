@@ -12,7 +12,7 @@ const {
 router.get('/github', (req, res, next) => {
   /* #swagger.tags = ['Auth']
      #swagger.summary = 'Login with GitHub'
-     #swagger.description = 'Redirects to GitHub OAuth login page. After authorizing, GitHub will redirect back to /auth/github/callback and you will be logged in.'
+     #swagger.description = 'Redirects to GitHub OAuth login page. NOTE: This cannot be tested from Swagger UI — open this URL directly in your browser tab instead. After authorizing, GitHub will redirect back and you will be logged in. Then return to Swagger to test protected routes.'
      #swagger.responses[302] = { description: 'Redirect to GitHub login' }
   */
   githubLogin(req, res, next);
