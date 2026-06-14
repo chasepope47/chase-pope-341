@@ -2,14 +2,13 @@
   "swagger": "2.0",
   "info": {
     "title": "Pantry Tracker API",
-    "description": "Track pantry items and notes with GitHub OAuth authentication",
+    "description": "Track pantry items and notes. Write routes require GitHub OAuth login — visit /auth/github to authenticate, then return here to test protected routes.",
     "version": "1.0.0"
   },
   "host": "chase-pope-341.onrender.com",
   "basePath": "/",
   "schemes": [
-    "https",
-    "http"
+    "https"
   ],
   "securityDefinitions": {
     "githubOAuth": {
@@ -22,235 +21,404 @@
     }
   },
   "paths": {
-    "/": {
+    "/auth/github": {
       "get": {
-        "description": "",
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "500": {
-            "description": "Internal Server Error"
-          }
-        }
-      },
-      "post": {
-        "description": "",
-        "parameters": [
-          {
-            "name": "body",
-            "in": "body",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "title": {
-                  "example": "any"
-                },
-                "body": {
-                  "example": "any"
-                },
-                "category": {
-                  "example": "any"
-                },
-                "priority": {
-                  "example": "any"
-                },
-                "contactId": {
-                  "example": "any"
-                },
-                "dueDate": {
-                  "example": "any"
-                },
-                "completed": {
-                  "example": "any"
-                }
-              }
-            }
-          }
+        "tags": [
+          "Auth"
         ],
+        "summary": "Login with GitHub",
+        "description": "Redirects to GitHub OAuth login page. After authorizing, GitHub will redirect back to /auth/github/callback and you will be logged in.",
         "responses": {
-          "201": {
-            "description": "Created"
+          "302": {
+            "description": "Redirect to GitHub login"
           },
-          "400": {
-            "description": "Bad Request"
-          },
-          "401": {
-            "description": "Unauthorized"
-          },
-          "500": {
-            "description": "Internal Server Error"
-          }
-        }
-      }
-    },
-    "/{id}": {
-      "get": {
-        "description": "",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "400": {
-            "description": "Bad Request"
-          },
-          "404": {
-            "description": "Not Found"
-          },
-          "500": {
-            "description": "Internal Server Error"
-          }
-        }
-      },
-      "put": {
-        "description": "",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "body",
-            "in": "body",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "title": {
-                  "example": "any"
-                },
-                "body": {
-                  "example": "any"
-                },
-                "category": {
-                  "example": "any"
-                },
-                "priority": {
-                  "example": "any"
-                },
-                "contactId": {
-                  "example": "any"
-                },
-                "dueDate": {
-                  "example": "any"
-                },
-                "completed": {
-                  "example": "any"
-                },
-                "createdAt": {
-                  "example": "any"
-                }
-              }
-            }
-          }
-        ],
-        "responses": {
-          "204": {
-            "description": "No Content"
-          },
-          "400": {
-            "description": "Bad Request"
-          },
-          "401": {
-            "description": "Unauthorized"
-          },
-          "404": {
-            "description": "Not Found"
-          },
-          "500": {
-            "description": "Internal Server Error"
-          }
-        }
-      },
-      "delete": {
-        "description": "",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "400": {
-            "description": "Bad Request"
-          },
-          "401": {
-            "description": "Unauthorized"
-          },
-          "404": {
-            "description": "Not Found"
-          },
-          "500": {
-            "description": "Internal Server Error"
-          }
-        }
-      }
-    },
-    "/github": {
-      "get": {
-        "description": "",
-        "responses": {
           "503": {
             "description": "Service Unavailable"
           }
         }
       }
     },
-    "/github/callback": {
+    "/auth/profile": {
       "get": {
-        "description": "",
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Get current logged-in user",
+        "description": "Returns the GitHub profile of the currently logged-in user. Returns 401 if not logged in.",
         "responses": {
           "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
-    "/failure": {
-      "get": {
-        "description": "",
-        "responses": {
-          "401": {
-            "description": "Unauthorized"
-          }
-        }
-      }
-    },
-    "/profile": {
-      "get": {
-        "description": "",
-        "responses": {
-          "200": {
-            "description": "OK"
+            "description": "User profile"
           },
           "401": {
-            "description": "Unauthorized"
+            "description": "Not logged in"
           }
         }
       }
     },
-    "/logout": {
+    "/auth/logout": {
       "get": {
-        "description": "",
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Logout",
+        "description": "Destroys the current session and logs the user out.",
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Logged out successfully"
           }
         }
+      }
+    },
+    "/items/": {
+      "get": {
+        "tags": [
+          "Items"
+        ],
+        "summary": "Get all pantry items",
+        "description": "Returns a list of all items in the pantry. No authentication required.",
+        "responses": {
+          "200": {
+            "description": "List of pantry items"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Items"
+        ],
+        "summary": "Create a pantry item (login required)",
+        "description": "Creates a new pantry item. Must be logged in via GitHub OAuth (/auth/github).",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "New pantry item details",
+            "schema": {
+              "$ref": "#/definitions/Item"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Item created, returns new item ID"
+          },
+          "400": {
+            "description": "Validation error"
+          },
+          "401": {
+            "description": "Not authenticated - visit /auth/github first"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        },
+        "security": [
+          {
+            "githubOAuth": [
+              "user:email"
+            ]
+          }
+        ]
+      }
+    },
+    "/items/{id}": {
+      "get": {
+        "tags": [
+          "Items"
+        ],
+        "summary": "Get a single pantry item",
+        "description": "Returns one pantry item by its MongoDB ID. No authentication required.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "MongoDB ObjectId of the item"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Pantry item found"
+          },
+          "400": {
+            "description": "Invalid ID format"
+          },
+          "404": {
+            "description": "Item not found"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Items"
+        ],
+        "summary": "Update a pantry item (login required)",
+        "description": "Updates an existing pantry item by ID. Must be logged in via GitHub OAuth (/auth/github).",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "MongoDB ObjectId of the item"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Updated pantry item properties",
+            "schema": {
+              "$ref": "#/definitions/Item"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Item updated successfully"
+          },
+          "400": {
+            "description": "Validation error or invalid ID"
+          },
+          "401": {
+            "description": "Not authenticated - visit /auth/github first"
+          },
+          "404": {
+            "description": "Item not found"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        },
+        "security": [
+          {
+            "githubOAuth": [
+              "user:email"
+            ]
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "Items"
+        ],
+        "summary": "Delete a pantry item (login required)",
+        "description": "Deletes a pantry item by ID. Must be logged in via GitHub OAuth (/auth/github).",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "MongoDB ObjectId of the item"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Item deleted successfully"
+          },
+          "400": {
+            "description": "Invalid ID format"
+          },
+          "401": {
+            "description": "Not authenticated - visit /auth/github first"
+          },
+          "404": {
+            "description": "Item not found"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        },
+        "security": [
+          {
+            "githubOAuth": [
+              "user:email"
+            ]
+          }
+        ]
+      }
+    },
+    "/notes/": {
+      "get": {
+        "tags": [
+          "Notes"
+        ],
+        "summary": "Get all notes",
+        "description": "Returns a list of all notes. No authentication required.",
+        "responses": {
+          "200": {
+            "description": "List of notes"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Notes"
+        ],
+        "summary": "Create a note (login required)",
+        "description": "Creates a new note. Must be logged in via GitHub OAuth (/auth/github).",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Note"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Note created, returns new note ID"
+          },
+          "400": {
+            "description": "Validation error"
+          },
+          "401": {
+            "description": "Not authenticated - visit /auth/github first"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        },
+        "security": [
+          {
+            "githubOAuth": [
+              "user:email"
+            ]
+          }
+        ]
+      }
+    },
+    "/notes/{id}": {
+      "get": {
+        "tags": [
+          "Notes"
+        ],
+        "summary": "Get a single note",
+        "description": "Returns one note by its MongoDB ID. No authentication required.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "MongoDB ObjectId of the note"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Note found"
+          },
+          "400": {
+            "description": "Invalid ID format"
+          },
+          "404": {
+            "description": "Note not found"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Notes"
+        ],
+        "summary": "Update a note (login required)",
+        "description": "Updates an existing note by ID. Must be logged in via GitHub OAuth (/auth/github).",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "MongoDB ObjectId of the note"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Note"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Note updated successfully"
+          },
+          "400": {
+            "description": "Validation error or invalid ID"
+          },
+          "401": {
+            "description": "Not authenticated - visit /auth/github first"
+          },
+          "404": {
+            "description": "Note not found"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        },
+        "security": [
+          {
+            "githubOAuth": [
+              "user:email"
+            ]
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "Notes"
+        ],
+        "summary": "Delete a note (login required)",
+        "description": "Deletes a note by ID. Must be logged in via GitHub OAuth (/auth/github).",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "MongoDB ObjectId of the note"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Note deleted successfully"
+          },
+          "400": {
+            "description": "Invalid ID format"
+          },
+          "401": {
+            "description": "Not authenticated - visit /auth/github first"
+          },
+          "404": {
+            "description": "Note not found"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        },
+        "security": [
+          {
+            "githubOAuth": [
+              "user:email"
+            ]
+          }
+        ]
       }
     }
   },
@@ -301,7 +469,7 @@
         },
         "itemId": {
           "type": "string",
-          "example": "665f1a2b3c4d5e6f7a8b9c0d"
+          "example": ""
         },
         "dueDate": {
           "type": "string",

@@ -3,10 +3,10 @@ const swaggerAutogen = require('swagger-autogen')();
 const doc = {
   info: {
     title: 'Pantry Tracker API',
-    description: 'Track pantry items and notes with GitHub OAuth authentication'
+    description: 'Track pantry items and notes. Write routes require GitHub OAuth login — visit /auth/github to authenticate, then return here to test protected routes.'
   },
   host: 'chase-pope-341.onrender.com',
-  schemes: ['https', 'http'],
+  schemes: ['https'],
   securityDefinitions: {
     githubOAuth: {
       type: 'oauth2',
@@ -30,7 +30,7 @@ const doc = {
       body: 'Need to buy more chicken broth before the holidays',
       category: 'shopping',
       priority: 'high',
-      itemId: '665f1a2b3c4d5e6f7a8b9c0d',
+      itemId: '',
       dueDate: '2025-12-31',
       completed: false
     }
@@ -38,6 +38,6 @@ const doc = {
 };
 
 const outputFile = './swagger.json';
-const endpointsFiles = ['./routes/items.js', './routes/notes.js', './routes/auth.js'];
+const endpointsFiles = ['./server.js'];
 
 swaggerAutogen(outputFile, endpointsFiles, doc);
