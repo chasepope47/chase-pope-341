@@ -22,7 +22,9 @@ const doc = {
       name: 'Chicken Broth',
       category: 'Canned Goods',
       quantity: 2,
+      unit: 'cans',
       cost: 1.99,
+      location: 'pantry',
       expirationDate: '2027-03-15'
     },
     Note: {

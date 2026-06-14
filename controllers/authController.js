@@ -1,5 +1,6 @@
 const passport = require('passport');
 const GitHubStrategy = require('passport-github2').Strategy;
+const { getDb } = require('../db/connect');
 
 if (process.env.GITHUB_CLIENT_ID && process.env.GITHUB_CLIENT_ID !== 'your_github_client_id') {
   passport.use(
@@ -9,7 +10,26 @@ if (process.env.GITHUB_CLIENT_ID && process.env.GITHUB_CLIENT_ID !== 'your_githu
         clientSecret: process.env.GITHUB_CLIENT_SECRET,
         callbackURL: process.env.CALLBACK_URL || 'http://localhost:8080/auth/github/callback'
       },
-      (accessToken, refreshToken, profile, done) => {
+      async (accessToken, refreshToken, profile, done) => {
+        try {
+          const db = getDb();
+          await db.collection('users').updateOne(
+            { githubId: profile.id },
+            {
+              $set: {
+                githubId: profile.id,
+                username: profile.username,
+                displayName: profile.displayName || profile.username,
+                profileUrl: profile.profileUrl,
+                lastLogin: new Date().toISOString()
+              },
+              $setOnInsert: { createdAt: new Date().toISOString() }
+            },
+            { upsert: true }
+          );
+        } catch (err) {
+          console.error('Error saving user to DB:', err.message);
+        }
         return done(null, profile);
       }
     )

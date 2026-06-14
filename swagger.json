@@ -95,11 +95,10 @@
           {
             "name": "body",
             "in": "body",
-            "description": "New pantry item details",
+            "required": true,
             "schema": {
               "$ref": "#/definitions/Item"
-            },
-            "required": true
+            }
           }
         ],
         "responses": {
@@ -173,11 +172,10 @@
           {
             "name": "body",
             "in": "body",
-            "description": "Updated pantry item properties",
+            "required": true,
             "schema": {
               "$ref": "#/definitions/Item"
-            },
-            "required": true
+            }
           }
         ],
         "responses": {
@@ -438,9 +436,17 @@
           "type": "number",
           "example": 2
         },
+        "unit": {
+          "type": "string",
+          "example": "cans"
+        },
         "cost": {
           "type": "number",
           "example": 1.99
+        },
+        "location": {
+          "type": "string",
+          "example": "pantry"
         },
         "expirationDate": {
           "type": "string",
